@@ -34,8 +34,8 @@ func main() {
     helloHandler := HelloHandler{}
     worldHandler := WorldHandler{}
 
-    // listen and serve
-    http.ListenAndServe(":8080/Hello", helloHandler)
-    http.ListenAndServe(":8080/World", worldHandler)
+    http.HandleFunc("/Hello", helloHandler)
+    http.HandleFunc("/World", worldHandler)
+    http.ListenAndServe(":8080", helloHandler)
 
 }
