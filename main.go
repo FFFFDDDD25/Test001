@@ -14,7 +14,7 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	
-	result, err2 := db.Exec("INSERT INTO TestMovie (name) VALUES ('Dave Gan')")
+	_, err2 := db.Exec("INSERT INTO TestMovie (name) VALUES ('Dave Gan')")
 	
 	if(err2 != nil){
 		w.Write([]byte("sql insert error"))
