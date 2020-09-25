@@ -8,7 +8,7 @@ import (
 )
 
 func HelloHandler(w http.ResponseWriter, req *http.Request) {
-	//test test
+	//FFFFF
 	db, err1 := sql.Open("mysql", "dave.gan:12345678@/movie_database")
 	if err1 != nil {
 		w.Write([]byte("sql open error"))
