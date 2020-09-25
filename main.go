@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -9,7 +10,9 @@ import (
 
 func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 
-	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230)/movie_database")
+	dbURI := fmt.Sprintf("%s:%s@unix(/%s/%s)/%s?parseTime=true", "dave.gan", "12345678", "/cloudsql", "movieenglish:us-central1:movie-english-database", "movie_database")
+
+	db, err := sql.Open("mysql", dbURI)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
@@ -24,22 +27,13 @@ func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 
 func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
 
-	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20)/movie_database")
-	if err != nil {
-		w.Write([]byte(err.Error()))
-	}
-
-	_, err = db.Exec("INSERT INTO TestMovie (name) VALUES ('Dave Gan')")
-	if err != nil {
-		w.Write([]byte(err.Error()))
-	}
-
+	w.Write([]byte("沒有東西!"))
 	return
 }
 
 func HelloHandler_2(w http.ResponseWriter, req *http.Request) {
 
-	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230:3306)/movie_database")
+	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
@@ -54,7 +48,7 @@ func HelloHandler_2(w http.ResponseWriter, req *http.Request) {
 
 func HelloHandler_1(w http.ResponseWriter, req *http.Request) {
 
-	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20:3306)/movie_database")
+	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
