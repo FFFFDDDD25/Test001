@@ -12,20 +12,21 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 
 	var err error
 	all := ""
+	var db *sql.DB
 
-	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20:3306)/movie_database")
+	db, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20:3306)/movie_database")
 	if err != nil {
 		all += err.Error()
 	}
-	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230:3306)/movie_database")
+	db, err = sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230:3306)/movie_database")
 	if err != nil {
 		all += err.Error()
 	}
-	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20)/movie_database")
+	db, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20)/movie_database")
 	if err != nil {
 		all += err.Error()
 	}
-	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230)/movie_database")
+	db, err = sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230)/movie_database")
 	if err != nil {
 		all += err.Error()
 	}
