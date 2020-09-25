@@ -11,7 +11,7 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	//FFFFFDDDDOOOO~~!!!!))))))AAAAA
 
 	var err error
-	all := ""
+	all := "11111"
 	var db *sql.DB
 
 	db, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20:3306)/movie_database")
@@ -31,7 +31,8 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 		all += err.Error()
 	}
 
-	w.Write([]byte(all))
+	all += "22222"
+	w.Write([]byte(all + "33333"))
 
 	return
 
