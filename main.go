@@ -9,20 +9,19 @@ import (
 
 func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	//FFFFFDDDDOOOO~~!!!!))))))AAAAA
-	db, err1 := sql.Open("mysql", "dave.gan:12345678@/movie_database")
+	db, err1 := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230:3306)/movie_database")
 	if err1 != nil {
 		w.Write([]byte(err1.Error()))
 		return
 	}
-
+	//35.194.153.230
 	_, err2 := db.Exec("INSERT INTO TestMovie (name) VALUES ('Dave Gan')")
-
 	if err2 != nil {
 		w.Write([]byte(err2.Error()))
 		return
 	}
 
-	w.Write([]byte("Hello!"))
+	w.Write([]byte("Hello!  sql insert done!!"))
 	return
 }
 func WorldHandler(w http.ResponseWriter, req *http.Request) {
