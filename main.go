@@ -11,7 +11,7 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	//FFFFFDDDDOOOO~~!!!!))))))AAAAA
 	db, err1 := sql.Open("mysql", "dave.gan:12345678@/movie_database")
 	if err1 != nil {
-		w.Write([]byte("sql open error"))
+		w.Write([]byte(err1))
 		return
 	}
 
