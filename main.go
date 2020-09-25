@@ -11,6 +11,7 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	//FFFFFDDDDOOOO~~!!!!))))))AAAAA
 
 	var err error
+	w.Write([]byte("00000"))
 	all := "11111"
 	var db *sql.DB
 
