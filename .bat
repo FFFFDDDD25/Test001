@@ -1,3 +1,3 @@
 	git add .
 	git commit -m "foo"
-	git push -f -u origin master 
+	git push  -u origin master 
