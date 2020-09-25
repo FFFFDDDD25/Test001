@@ -15,23 +15,21 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20:3306)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
-		return
 	}
 	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230:3306)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
-		return
 	}
 	_, err = sql.Open("mysql", "dave.gan:12345678@tcp(34.66.219.20)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
-		return
 	}
 	db, err := sql.Open("mysql", "dave.gan:12345678@tcp(35.194.153.230)/movie_database")
 	if err != nil {
 		w.Write([]byte(err.Error()))
-		return
 	}
+
+	return
 
 	//35.194.153.230
 	_, err = db.Exec("INSERT INTO TestMovie (name) VALUES ('Dave Gan')")
