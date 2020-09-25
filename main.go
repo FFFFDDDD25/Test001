@@ -26,7 +26,7 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	return
 }
 func WorldHandler(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte("World!~~~"))
+	w.Write([]byte("World!~~~@@@@@"))
 }
 func MainHandler(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte("Main Page!"))
