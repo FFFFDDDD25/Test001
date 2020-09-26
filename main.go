@@ -31,7 +31,7 @@ func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(err1.Error()))
 	} else {
 		log.Fatal("沒事啦")
-		w.Write([]byte("沒事啦"))
+		w.Write([]byte("沒事啦," + name))
 	}
 
 	return
