@@ -24,7 +24,7 @@ func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var name string
-	row := db.QueryRow("SELECT name FROM TestMovie WHERE id = 2", name)
+	row := db.QueryRow("SELECT name FROM TestMovie WHERE id = 2")
 	err1 := row.Scan(&name)
 	if err1 != nil {
 		log.Fatal(err1)
