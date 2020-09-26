@@ -24,12 +24,30 @@ func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(err.Error()))
 	}
 
-	var name string
-	err1 := db.QueryRow("select name from TestMovie where id = ?", 2).Scan(&name)
-	if err1 != nil {
-		w.Write([]byte(err1.Error()))
+	var id string = req.URL.Query().Get("id")
+	var name string = req.URL.Query().Get("name")
+	var sfsfd string = req.URL.Query().Get("sfsfd")
+	if sfsfd != "" {
+		w.Write([]byte("sfsfd非空白"))
 	} else {
-		w.Write([]byte("沒事啦," + name))
+		w.Write([]byte("sfsfd為空白"))
+	}
+
+	if id != "" {
+		err1 := db.QueryRow("select name from TestMovie where id = ?", id).Scan(&name)
+		if err1 != nil {
+			w.Write([]byte(err1.Error()))
+		} else {
+			w.Write([]byte("沒事啦," + name))
+		}
+	} else if name != "" {
+		var n string
+		err1 := db.QueryRow("select name from TestMovie where name = ?", name).Scan(&n)
+		if err1 != nil {
+			w.Write([]byte(err1.Error()))
+		} else {
+			w.Write([]byte("沒事啦," + n))
+		}
 	}
 
 	return
