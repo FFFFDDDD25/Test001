@@ -20,7 +20,7 @@ func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
 	ctx := context.Background()
 
 	projectID := "movieenglish"
-	bucketName := "my-new-bucket"
+	bucketName := projectID + ".appspot.com"
 	fileName := "測試檔名.txt"
 
 	// Creates a client.
@@ -33,11 +33,14 @@ func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
 	bucket := client.Bucket(bucketName)
 
 	// Creates the new bucket.
-	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
-	defer cancel()
-	if err := bucket.Create(ctx, projectID, nil); err != nil {
-		w.Write([]byte("1111" + err.Error()))
-		return
+	FALSE := false
+	if FALSE {
+		ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+		defer cancel()
+		if err := bucket.Create(ctx, projectID, nil); err != nil {
+			w.Write([]byte("1111" + err.Error()))
+			return
+		}
 	}
 
 	fmt.Printf("Bucket %v created.\n", bucketName)
