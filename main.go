@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 
@@ -44,12 +43,14 @@ func HelloHandler_2(w http.ResponseWriter, req1 *http.Request) {
 	// 启动chromedriver，端口号可自定义
 	_, err = selenium.NewChromeDriverService("/opt/google/chrome/chromedriver", 9515, opts...)
 	if err != nil {
-		log.Printf("Error starting the ChromeDriver server: %v", err)
+		w.Write([]byte("1111" + err.Error()))
+		return
 	}
 	// 调起chrome浏览器
 	webDriver, err := selenium.NewRemote(caps, fmt.Sprintf("http://localhost:%d/wd/hub", 9515))
 	if err != nil {
-		panic(err)
+		w.Write([]byte("8888" + err.Error()))
+		return
 	}
 	// 这是目标网站留下的坑，不加这个在linux系统中会显示手机网页，每个网站的策略不一样，需要区别处理。
 	webDriver.AddCookie(&selenium.Cookie{
@@ -59,14 +60,16 @@ func HelloHandler_2(w http.ResponseWriter, req1 *http.Request) {
 	// 导航到目标网站
 	err = webDriver.Get("https://www.xvideos.com/")
 	if err != nil {
-		panic(fmt.Sprintf("Failed to load page: %s\n", err))
+		w.Write([]byte("7777" + err.Error()))
+		return
 	}
 
 	title, err := webDriver.Title()
 	if err != nil {
-		panic(fmt.Sprintf("Failed to get title: %s\n", err))
+		w.Write([]byte("6666" + title))
+		return
 	}
-	w.Write([]byte("0000" + title))
+	w.Write([]byte("5555" + title))
 }
 
 func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
@@ -117,6 +120,18 @@ func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
 	w.Write(slurp)
 	//fmt.Fprintf(w, "%s\n", bytes.SplitN(slurp, []byte("\n"), 2)[0])
 }
+
+/*
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<err>500 Server Error</err>
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Error: Server Error</h1>
+<h2>The server encountered an error and could not complete your request.<p>Please try again in 30 seconds.</h2>
+<h2></h2>
+</body></html>
+*/
 
 func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 
