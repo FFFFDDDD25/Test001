@@ -3,11 +3,12 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 )
+
+//gcloud sql connect movie-english-database --user=dave.gan --quiet
 
 func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 
@@ -24,13 +25,10 @@ func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var name string
-	row := db.QueryRow("SELECT name FROM TestMovie WHERE id = 2")
-	err1 := row.Scan(&name)
+	err1 := db.QueryRow("select name from TestMovie where id = ?", 2).Scan(&name)
 	if err1 != nil {
-		log.Fatal(err1)
 		w.Write([]byte(err1.Error()))
 	} else {
-		log.Fatal("沒事啦")
 		w.Write([]byte("沒事啦," + name))
 	}
 
