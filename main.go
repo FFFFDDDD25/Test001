@@ -1,14 +1,65 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
+	"time"
 
+	"cloud.google.com/go/storage"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 //gcloud sql connect movie-english-database --user=dave.gan --quiet
+
+func HelloHandler_3(w http.ResponseWriter, req *http.Request) {
+
+	ctx := context.Background()
+
+	projectID := "movieenglish"
+	bucketName := "my-new-bucket"
+	fileName := "測試檔名.txt"
+
+	// Creates a client.
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		w.Write([]byte("0000" + err.Error()))
+		return
+	}
+
+	bucket := client.Bucket(bucketName)
+
+	// Creates the new bucket.
+	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+	if err := bucket.Create(ctx, projectID, nil); err != nil {
+		w.Write([]byte("1111" + err.Error()))
+		return
+	}
+
+	fmt.Printf("Bucket %v created.\n", bucketName)
+
+	io.WriteString(w, "\nAbbreviated file content (first line and last 1K):\n")
+
+	rc, err := bucket.Object(fileName).NewReader(ctx)
+	if err != nil {
+		w.Write([]byte("2222" + err.Error()))
+		return
+	}
+	defer rc.Close()
+	slurp, err := ioutil.ReadAll(rc)
+	if err != nil {
+		w.Write([]byte("3333" + err.Error()))
+		return
+	}
+
+	w.Write([]byte("4444"))
+	w.Write(slurp)
+	//fmt.Fprintf(w, "%s\n", bytes.SplitN(slurp, []byte("\n"), 2)[0])
+}
 
 func HelloHandler_4(w http.ResponseWriter, req *http.Request) {
 
@@ -63,6 +114,7 @@ func MainHandler(w http.ResponseWriter, req *http.Request) {
 func main() {
 	r := http.NewServeMux()
 	r.HandleFunc("/h4", HelloHandler_4)
+	r.HandleFunc("/h3", HelloHandler_3)
 	r.HandleFunc("/world", WorldHandler)
 	r.HandleFunc("/", MainHandler)
 
