@@ -41,9 +41,15 @@ func HelloHandler_2(w http.ResponseWriter, req1 *http.Request) {
 	}
 	caps.AddChrome(chromeCaps)
 	// 启动chromedriver，端口号可自定义
-	_, err = selenium.NewChromeDriverService("/usr/bin/chromedriver", 9515, opts...)
+	_, err = selenium.NewChromeDriverService("chromedriver", 9515, opts...) //"/usr/bin/chromedriver"
 	if err != nil {
 		w.Write([]byte("1111" + err.Error()))
+
+		_, err = selenium.NewChromeDriverService("/chromedriver", 9515, opts...)
+		if err != nil {
+			w.Write([]byte("1122" + err.Error()))
+		}
+
 		return
 	}
 	// 调起chrome浏览器
